@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+    <meta name="description" content=" CS6314 - Assignment 3, Spring 2019">
+    <meta name="author" content="Aarya Vardhan Reddy Paakaala">
+
+    <title> Assignment 3 </title>
+
+    <style>
+      html, body {
+        height: 100%;
+        padding: 25;
+        margin: 25;
+      }
+
+      *
+			{
+				box-sizing: border-box;
+			}
+
+      #getButton
+			{
+				width: 15%;
+				margin: 7% auto;
+			}
+
+			#yearList, #genderList
+			{
+				margin: 7% auto;
+			}
+
+			#result_Div
+			{
+				padding-top: 7%;
+			}
+
+    </style>
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		
+		<script type="text/javascript">
+		
+      var year = "";
+      var gender = "";
+
+      $(document).ready (function () {
+				$("#getButton").click (function () {
+						year	= $("#yearList").find (":selected").text ();
+						gender	= $("#genderList").find (":selected").val ();
+
+						$.ajax ({
+							type: "POST",
+							url: "babynames.php",
+							cache: "false",
+							dataType: "html",
+							data: {year:year, gender:gender},
+							success: function (result) {
+								$("#result_Div").html (result);
+							},
+							error: function (error) {alert ("PHP retrieval Error")}
+						})
+					})
+				})
+    </script>
+
+</head>
+
+<body>
+
+  <select id="yearList">
+			<option selected="All years">All years</option>
+			<option>2005</option>
+			<option>2006</option>
+			<option>2007</option>
+			<option>2008</option>
+			<option>2009</option>
+			<option>2010</option>
+			<option>2011</option>
+			<option>2012</option>
+			<option>2013</option>
+			<option>2014</option>
+			<option>2015</option>
+		</select>
+
+		<select id="genderList">
+			<option value="Both" selected="Both">Both</option>
+			<option value="m">Male</option>
+			<option value="f">Female</option>
+		</select>
+
+		<input type="button" id="getButton" value="Get Names">
+
+		
+		<div id="result_Div"></div>
+</body>
+</html>
